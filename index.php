@@ -23,15 +23,13 @@ include('autoload.php');
 $session = new \api\Session();
 $session->request();
 
-$post = $data           = (object) $_POST;
-$data           = (object) $_GET;
+$post = $data = (object) $_POST;
 
 $data->username = $_SERVER['PHP_AUTH_USER'] ?? "";
 $data->password = $_SERVER['PHP_AUTH_PW'] ?? "";
-
-$host   = $_SERVER['HTTP_HOST'] ?? "";
-$method = $_SERVER['REQUEST_METHOD'] ?? "";
-$uri    = $_SERVER['REQUEST_URI'] ?? "";
+$host           = $_SERVER['HTTP_HOST'] ?? "";
+$method         = $_SERVER['REQUEST_METHOD'] ?? "";
+$uri            = $_SERVER['REQUEST_URI'] ?? "";
 
 $base       = "";
 $function   = "";
@@ -61,22 +59,22 @@ if ($base == "api")
 {
     $api      = new \api\Api();
     $userData = $api->getUserData();
-    $obj = new stdClass();
+    $obj      = new stdClass();
 
     //$obj = $api->readURI($method, $function, $data);
 
     try
     {
-        $obj = $api->readURI($method, $function, $data);
+        $obj     = $api->readURI($method, $function, $data);
         $success = true;
-        $log = "OK";
-        $msg = false;
+        $log     = "OK";
+        $msg     = false;
     }
     catch (ErrorException $e)
     {
         $success = false;
-        $log = "ERROR";
-        $msg = $e->getMessage();
+        $log     = "ERROR";
+        $msg     = $e->getMessage();
     }
 
     $resp = json_encode([
@@ -85,8 +83,9 @@ if ($base == "api")
         'data'    => $obj,
         'success' => $success,
         'msg'     => $msg
-    ]);
+    ]
+    );
 
     echo $resp;
-    error_log($log.': '. $resp);
+    error_log($log . ': ' . $resp);
 }
