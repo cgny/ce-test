@@ -26,11 +26,7 @@ class Api
         }
         elseif (isset($this->end_points[$method]) && !isset($this->end_points[$method][$uri]))
         {
-            throw new \ErrorException('No  request : /' . $uri . ' for method : ' . $method);
-        }
-        elseif (!isset($this->end_points[$method][$uri]))
-        {
-            throw new \ErrorException('Incorrect request : ' . $uri);
+            throw new \ErrorException('No  request : /' . $uri . ' with method : ' . $method);
         }
         elseif (!isset($end_point['function']))
         {
@@ -74,19 +70,20 @@ class Api
         {
             $keys = array_keys($this->end_points);
             array_flip($keys);
-            $uris  = [];
+            $uris = [];
             foreach ($keys as $key)
             {
                 $uris[$key] = array_keys($this->end_points[$key]);
-                $all[$key] = [];
+                $all[$key]  = [];
                 array_walk($uris[$key], function ( $array ) use ( $key, &$all )
                 {
-                    $q =  [
+                    $q           = [
                         'endpoint' => $array,
                         'args'     => $this->end_points[$key][$array]['args']
                     ];
                     $all[$key][] = $q;
-                });
+                }
+                );
             }
             return $all;
         }
@@ -99,6 +96,8 @@ class Api
             'requests'       => $session->getRequsts(),
             'requestBalance' => $session->getRequestsBalance(),
             'throttle'       => $session->getThrottleLimit(),
+            'timeLimit'      => $session->getTimeLimit(),
+            'timer'          => $session->getTimeLeft(),
         ];
     }
 

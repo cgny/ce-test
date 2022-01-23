@@ -21,7 +21,16 @@ error_reporting(E_ALL);
 include('autoload.php');
 
 $session = new \api\Session();
-$session->request();
+try{
+    $session->request();
+}
+catch(\ErrorException $e)
+{
+    $api      = new \api\Api();
+    $userData = $api->getUserData();
+    echo json_encode(['error' => $e->getMessage(), $userData]);
+    exit;
+}
 
 $post = $data = (object) $_POST;
 

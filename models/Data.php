@@ -28,7 +28,7 @@ class Data
 
         if (!$this->auth($user, $password))
         {
-            throw new \Exception('Authentication failed.');
+            throw new \ErrorException('Authentication failed.');
         }
 
         if (isset($data->ticker))
@@ -61,11 +61,11 @@ class Data
 
         if ($dif > $this->max_days)
         {
-            throw new \Exception('Date range is more than 31 days');
+            throw new \ErrorException('Date range is more than 31 days');
         }
         if($dif < 0)
         {
-            throw new \Exception('From date is greater than to date');
+            throw new \ErrorException('From date is greater than to date');
         }
 
     }

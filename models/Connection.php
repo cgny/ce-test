@@ -24,7 +24,7 @@ class Connection
         $connection   = new \mysqli($this->config['host'], sprintf("%s", $this->user), sprintf("%s", $this->password), $this->config['db_name'], $this->config['port']);
         if ($connection->connect_errno)
         {
-            throw new \Exception("Failed to connect : " . $connection->connect_error);
+            throw new \ErrorException("Failed to connect : " . $connection->connect_error);
         }
         else
         {

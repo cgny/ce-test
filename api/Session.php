@@ -10,7 +10,7 @@ namespace api;
 
 class Session{
 
-    private $throttle_limit = 50; //per min
+    private $throttle_limit = 15, $time_length = 60; //per min
 
     function __construct()
     {
@@ -26,14 +26,14 @@ class Session{
     {
         if($_SESSION['requests'] == $this->throttle_limit)
         {
-            throw new \Exception('You have reached your API request limit');
+            throw new \ErrorException('You have reached your API request limit');
         }
         $_SESSION['requests']++;
     }
 
     function renewRequests()
     {
-        if($_SESSION['start_time'] != date('Y-m-d H:i'))
+        if($this->getTimeLeft() > $this->time_length)
         {
             $_SESSION['start_time'] = date('Y-m-d H:i');
             $_SESSION['requests'] = 0;
@@ -53,6 +53,18 @@ class Session{
     function getThrottleLimit()
     {
         return $this->throttle_limit;
+    }
+
+    function getTimeLimit()
+    {
+        return $this->time_length;
+    }
+
+    function getTimeLeft()
+    {
+        $start = strtotime($_SESSION['start_time']);
+        $now = time();
+        return ($now-$start);
     }
 
 }
