@@ -60,7 +60,6 @@ $req = [
     'uri'      => $parse['path'],
     'method'   => $method,
     'base'     => $base,
-    'function' => $function,
     'query'    => $parse['query'] ?? "",
     'data'     => $post,
 ];
