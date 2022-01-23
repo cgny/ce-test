@@ -7,7 +7,7 @@
  */
 
 return [
-    'host'    => 'localhost',
+    'host'    => '137.184.195.46',
     'port'    => 3306,
     'db_name' => 'finance'
 ];
