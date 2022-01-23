@@ -32,10 +32,12 @@ catch(\ErrorException $e)
     exit;
 }
 
-$post = $data = (object) $_POST;
+$post = (object) $_POST;
+$data = clone $post;
 
 $data->username = $_SERVER['PHP_AUTH_USER'] ?? "";
 $data->password = $_SERVER['PHP_AUTH_PW'] ?? "";
+
 $host           = $_SERVER['HTTP_HOST'] ?? "";
 $method         = $_SERVER['REQUEST_METHOD'] ?? "";
 $uri            = $_SERVER['REQUEST_URI'] ?? "";
@@ -60,7 +62,7 @@ $req = [
     'base'     => $base,
     'function' => $function,
     'query'    => $parse['query'] ?? "",
-    'data'     => $post
+    'data'     => $post,
 ];
 
 $obj = "";

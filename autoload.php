@@ -8,5 +8,6 @@
 
 include('api/Api.php');
 include('api/Session.php');
+include('models/Model.php');
 include('models/Data.php');
 include('models/Connection.php');

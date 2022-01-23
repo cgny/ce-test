@@ -8,7 +8,7 @@
 
 namespace models;
 
-class Data
+class Data extends Model
 {
 
     private $connection = false;
@@ -72,7 +72,7 @@ class Data
 
     function auth( $user, $password )
     {
-        $connection = new Connection($user, $password);
+        $connection = $this->getConnection($user, $password);
         $conn = $connection->connect();
         if($conn)
         {
